@@ -1,0 +1,98 @@
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "New Card Database", menuName = "Card Database")]
+public class CardDatabase : ScriptableObject
+{
+    public List<Card> actionCards;
+    public List<Card> architecturalCards;
+    public List<Card> electricalCards;
+    public List<Card> plumbingCards;
+    public List<Card> specialCards;
+
+    /// <summary>
+    /// Get random cards from a specific type.
+    /// </summary>
+    public List<Card> GetRandomCardsByType(CardType type, int count, bool allowDuplicates = false)
+    {
+        switch (type)
+        {
+            case CardType.Action: return GetRandomCards(actionCards, count, allowDuplicates);
+            case CardType.Architectural: return GetRandomCards(architecturalCards, count, allowDuplicates);
+            case CardType.Electrical: return GetRandomCards(electricalCards, count, allowDuplicates);
+            case CardType.Plumbing: return GetRandomCards(plumbingCards, count, allowDuplicates);
+            case CardType.Special: return GetRandomCards(specialCards, count, allowDuplicates);
+            default: return new List<Card>();
+        }
+    }
+
+    /// <summary>
+    /// Generate a deck using all card types with a specified size.
+    /// </summary>
+    public List<Card> GenerateDeck(int deckSize, bool allowDuplicates = false)
+    {
+        List<Card> deck = new List<Card>();
+
+        List<List<Card>> allCardLists = new List<List<Card>> { actionCards, architecturalCards, electricalCards, plumbingCards, specialCards };
+        List<Card> allCards = new List<Card>();
+
+        // Collect all cards from all categories
+        foreach (var cardList in allCardLists)
+        {
+            allCards.AddRange(cardList);
+        }
+
+        if (allCards.Count == 0) return deck; // Return empty if no cards exist
+
+        if (allowDuplicates)
+        {
+            // Allow duplicates in deck
+            for (int i = 0; i < deckSize; i++)
+            {
+                deck.Add(allCards[Random.Range(0, allCards.Count)]);
+            }
+        }
+        else
+        {
+            // Prevent duplicates by shuffling and selecting
+            List<Card> tempList = new List<Card>(allCards);
+            for (int i = 0; i < Mathf.Min(deckSize, tempList.Count); i++)
+            {
+                int randomIndex = Random.Range(0, tempList.Count);
+                deck.Add(tempList[randomIndex]);
+                tempList.RemoveAt(randomIndex);
+            }
+        }
+
+        return deck;
+    }
+
+    /// <summary>
+    /// Generic function to get random cards from a given list.
+    /// </summary>
+    private List<Card> GetRandomCards(List<Card> cardList, int count, bool allowDuplicates)
+    {
+        List<Card> result = new List<Card>();
+        if (cardList == null || cardList.Count == 0) return result;
+
+        if (allowDuplicates)
+        {
+            for (int i = 0; i < count; i++)
+            {
+                result.Add(cardList[Random.Range(0, cardList.Count)]);
+            }
+        }
+        else
+        {
+            List<Card> tempList = new List<Card>(cardList);
+            for (int i = 0; i < Mathf.Min(count, tempList.Count); i++)
+            {
+                int randomIndex = Random.Range(0, tempList.Count);
+                result.Add(tempList[randomIndex]);
+                tempList.RemoveAt(randomIndex);
+            }
+        }
+
+        return result;
+    }
+}
