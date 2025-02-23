@@ -621,7 +621,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 1962976870}
   m_OnClick:
     m_PersistentCalls:
@@ -1577,8 +1577,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1202621624}
+  - component: {fileID: 1202621625}
   m_Layer: 0
-  m_Name: CanvasController
+  m_Name: GameMenuController
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1599,6 +1600,28 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1202621625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1202621623}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6017874d04b51db4eb5af8e223832aa2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  profileAvatar: {fileID: 430343218}
+  profileAvatars:
+  - {fileID: 21300000, guid: 2efbb93d4a5b40449b38eb4c32bf0358, type: 3}
+  - {fileID: 21300000, guid: 1c5abb0474ca6f5448184e0d664dbdab, type: 3}
+  - {fileID: 21300000, guid: 419af3e9ff404614585e2f36f3141e04, type: 3}
+  - {fileID: 21300000, guid: dafbd893b88f54842ab2192a1d733360, type: 3}
+  - {fileID: 21300000, guid: 98d7f939c30b9d040af0169a3562521d, type: 3}
+  - {fileID: 21300000, guid: 8033d67afca6ad8439c61a41c8bc4ea1, type: 3}
+  - {fileID: 21300000, guid: f2c1dd56e26f7144f86df335e1617377, type: 3}
+  - {fileID: 21300000, guid: 98d7f939c30b9d040af0169a3562521d, type: 3}
 --- !u!1 &1230467766
 GameObject:
   m_ObjectHideFlags: 0
@@ -1862,7 +1885,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 2006202800}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 1202621625}
+        m_TargetAssemblyTypeName: GameMenuController, DB.Game
+        m_MethodName: OnClick_VSAI
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &1347341473
 MonoBehaviour:
   m_ObjectHideFlags: 0

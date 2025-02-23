@@ -6,9 +6,19 @@ using UnityEngine.UI;
 public class CardUIContainer : MonoBehaviour
 {
     public Image CardVisual;
+    public Card card;
+    public bool isRaised;
 
-    public void SetCardVisual(Sprite sprite)
+    public void SetCardVisual(Sprite sprite, Card getCard, bool ifOwnHand)
     {
-        CardVisual.sprite = sprite;
+        if(ifOwnHand)
+            CardVisual.sprite = sprite;
+
+        card = getCard;
+    }
+
+    public CardType GetCardType()
+    {
+        return card.CardType;
     }
 }

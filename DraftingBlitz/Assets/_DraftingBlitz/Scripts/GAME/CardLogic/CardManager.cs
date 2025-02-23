@@ -13,18 +13,22 @@ public class CardManager : MonoBehaviour
 
     [SerializeField] private List<Card> Deck = new List<Card>();
 
+    public List<CardHand> cardHand;
+
     private void Start()
     {
         Deck = cardDatabase.GenerateDeck(deckSize, allowDuplicates);
 
         Debug.Log("Cards in Deck");
 
-        foreach (Card card in Deck)
+        for (int i = 0; i < cardHand.Count; i++)
         {
-            GameObject obj = Instantiate(cardPrefab, cardPrefabParent);
-            obj.GetComponent<CardUIContainer>().SetCardVisual(card.CardVisual);
+            foreach(Card card in Deck)
+            {
+                cardHand[i].AddCard(card.CardVisual, card);
 
-            Debug.Log(card.CardName);
+                Debug.Log(card.CardName);
+            }
         }
     }
 }

@@ -6,6 +6,18 @@ EditorBuildSettings:
   serializedVersion: 2
   m_Scenes:
   - enabled: 1
-    path: Assets/Scenes/SampleScene.unity
-    guid: 8c9cfa26abfee488c85f1582747f6a02
+    path: Assets/_DraftingBlitz/Scenes/MainScenes/MainMenu.unity
+    guid: 040d1b31c2ab4e147aecfb05371e1557
+  - enabled: 1
+    path: Assets/_DraftingBlitz/Scenes/MainScenes/LoadingScreen.unity
+    guid: 827fba6f1b99baa419759b98d98eb72e
+  - enabled: 1
+    path: Assets/_DraftingBlitz/Scenes/MainScenes/CharacterSelection.unity
+    guid: aa14bd39804e91542a09b2d9cea5dff2
+  - enabled: 1
+    path: Assets/_DraftingBlitz/Scenes/MainScenes/GameMenu.unity
+    guid: aef3ca1ef20e54e4b87b9dd43949b87c
+  - enabled: 1
+    path: Assets/_DraftingBlitz/Scenes/MainScenes/GameScene.unity
+    guid: 9b70cc7238da43d45b78be19dc557681
   m_configObjects: {}
