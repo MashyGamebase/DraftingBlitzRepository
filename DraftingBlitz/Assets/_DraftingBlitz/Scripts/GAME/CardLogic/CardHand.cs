@@ -7,7 +7,7 @@ public class CardHand : MonoBehaviour
     public enum HandType { Bottom, Left, Right }
     public HandType handType;
 
-    public GameObject cardPrefab; // Assign in Inspector
+    public GameObject cardPrefab;
     public float maxFanAngle = 30f; // Max angle spread for MyHand
     public float cardSpacing = 10f; // Distance between cards
     public float popHeight = 30f; // How much the card pops up
@@ -17,7 +17,11 @@ public class CardHand : MonoBehaviour
 
     public bool ownHand = false;
 
+    public int identifier;
+
     public bool cardRaised;
+
+    public Transform poolOrigin;
 
     void Start()
     {
@@ -50,7 +54,7 @@ public class CardHand : MonoBehaviour
 
         // Remove the card's GameObject and return visual to the pool
         Destroy(cards[cardChosen].gameObject);
-        CardPool.Instance.AddToPool(cardLogics[cardChosen].card.CardVisual);
+        CardPool.Instance.AddToPool(cardLogics[cardChosen].card.CardVisual, poolOrigin.position);
 
         // Remove from lists
         cards.RemoveAt(cardChosen);
@@ -116,7 +120,7 @@ public class CardHand : MonoBehaviour
 
     private void ArrangeSideHand(int cardCount, bool isLeft)
     {
-        float angleStep = 10f; // Small tilt for side hands
+        //float angleStep = 10f; // Small tilt for side hands
         float startY = -(cardCount * cardSpacing) / 2f;
         float rotationAngle = isLeft ? 90f : -90f; // Left = 90°, Right = -90°
 
@@ -135,7 +139,7 @@ public class CardHand : MonoBehaviour
 
         if (cardLogics[index].isRaised)
         {
-            GetComponentInParent<Player>().PlayCard();
+            TurnSystem.Instance.PlayCard(index);
 
             for (int i = 0; i < cards.Count; i++)
             {

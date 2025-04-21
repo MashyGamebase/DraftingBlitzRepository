@@ -12,11 +12,13 @@ public class PhotonLoginSequence : MonoBehaviourPunCallbacks
 
     public override void OnConnectedToMaster()
     {
+        Debug.Log("Connected to Master");
         PhotonNetwork.JoinLobby();
     }
 
     public override void OnJoinedLobby()
     {
+        Debug.Log("Joined Lobby");
         FadeController.Instance.StartFakeLoading("CharacterSelection");
     }
 }

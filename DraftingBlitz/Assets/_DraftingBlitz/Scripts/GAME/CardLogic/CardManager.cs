@@ -1,34 +1,41 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
     public CardDatabase cardDatabase;
-    public int deckSize;
+    public int deckSize = 5;
     public bool allowDuplicates = false;
 
     public GameObject cardPrefab;
-    public Transform cardPrefabParent;
 
-    [SerializeField] private List<Card> Deck = new List<Card>();
+    public Transform[] cardPrefabParents;
 
-    public List<CardHand> cardHand;
+    [SerializeField] private List<Card> CachedDeck = new List<Card>();
+    public List<CardHand> cardHands = new List<CardHand>();
 
-    private void Start()
+    public GameObject handPrefab;
+
+    public void ClearAllHands()
     {
-        Deck = cardDatabase.GenerateDeck(deckSize, allowDuplicates);
-
-        Debug.Log("Cards in Deck");
-
-        for (int i = 0; i < cardHand.Count; i++)
+        foreach (Transform child in cardPrefabParents)
         {
-            foreach(Card card in Deck)
-            {
-                cardHand[i].AddCard(card.CardVisual, card);
+            Destroy(child.gameObject);
+        }
+        cardHands.Clear();
+    }
 
-                Debug.Log(card.CardName);
-            }
+    public void GenerateHand(int index, CardHand.HandType handType, bool ownHand)
+    {
+        cardHands[index].handType = handType;
+        cardHands[index].ownHand = ownHand;
+
+        CachedDeck.Clear();
+
+        CachedDeck = cardDatabase.GenerateDeck(deckSize, allowDuplicates);
+        foreach (Card card in CachedDeck)
+        {
+            cardHands[index].AddCard(card.CardVisual, card);
         }
     }
 }

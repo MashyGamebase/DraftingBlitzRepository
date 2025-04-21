@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "866945824779",
+    "firebase_url": "https://draftingblitz-default-rtdb.asia-southeast1.firebasedatabase.app",
+    "project_id": "draftingblitz",
+    "storage_bucket": "draftingblitz.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:866945824779:android:f424f9b0e08155a1582f0e",
+        "android_client_info": {
+          "package_name": "com.MashyGames.DraftingBlitz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "866945824779-fkcl3m32mie14m5b2pc805hracudnh77.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBxgG49_HuwMnXx-tAencDJHzyxC2pUE1E"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "866945824779-fkcl3m32mie14m5b2pc805hracudnh77.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

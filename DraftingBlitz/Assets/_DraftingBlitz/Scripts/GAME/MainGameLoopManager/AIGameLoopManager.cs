@@ -10,7 +10,7 @@ public class AIGameLoopManager : Singleton<AIGameLoopManager>
     public float turnDuration = 15f;
     private bool isGameRunning = true;
 
-    public CurrentCategory currentCategory; // The active category for this turn
+    public Category currentCategory; // The active category for this turn
 
     public UnityEvent<int> OnTurnStart;
     public UnityEvent<int> OnTurnEnd;
@@ -109,11 +109,11 @@ public class AIGameLoopManager : Singleton<AIGameLoopManager>
             // Special flag for the 2 special cards
             // Action Cards && Special Cards
 
-            case CurrentCategory.Architectural:
+            case Category.Architectural:
                 return cardType == CardType.Architectural;
-            case CurrentCategory.Electrical:
+            case Category.Electrical:
                 return cardType == CardType.Electrical;
-            case CurrentCategory.Plumbing:
+            case Category.Plumbing:
                 return cardType == CardType.Plumbing;
             default:
                 return false;
@@ -125,7 +125,7 @@ public class AIGameLoopManager : Singleton<AIGameLoopManager>
     /// </summary>
     private void ChangeCategory()
     {
-        CurrentCategory[] categories = { CurrentCategory.Architectural, CurrentCategory.Electrical, CurrentCategory.Plumbing };
+        Category[] categories = { Category.Architectural, Category.Electrical, Category.Plumbing };
         currentCategory = categories[Random.Range(0, categories.Length)];
         Debug.Log($"New Category: {currentCategory}");
     }

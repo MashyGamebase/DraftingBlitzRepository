@@ -7,10 +7,23 @@ public class GameMenuController : MonoBehaviour
 {
     public Image profileAvatar;
     public List<Sprite> profileAvatars;
+    public Button MenuButton;
+
 
     private void Start()
     {
         SetAvatar();
+        AssignButtons();
+    }
+
+    void AssignButtons()
+    {
+        MenuButton.onClick.AddListener(LogoutUserAndLoadMainMenu);
+    }
+
+    void LogoutUserAndLoadMainMenu()
+    {
+        FirebaseManager.Instance?.LogoutUser();
     }
 
     private void SetAvatar()
