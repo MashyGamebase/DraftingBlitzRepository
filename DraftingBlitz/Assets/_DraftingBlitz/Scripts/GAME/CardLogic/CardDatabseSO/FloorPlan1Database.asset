@@ -1,0 +1,65 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3da9224e5e8bed3409ffa4e05533c7f7, type: 3}
+  m_Name: FloorPlan1Database
+  m_EditorClassIdentifier: 
+  actionCards:
+  - {fileID: 11400000, guid: 46116e00c4e8516489a2a57e08f17c72, type: 2}
+  - {fileID: 11400000, guid: 4df16ceea34a8b84fbd7c5b220a91ce7, type: 2}
+  - {fileID: 11400000, guid: 556f52df369c86e4e904685aca226ff3, type: 2}
+  architecturalCards:
+  - {fileID: 11400000, guid: e76c05e4df7b55342ac502ed5b082373, type: 2}
+  - {fileID: 11400000, guid: 10f50f6548c029f44a0dde61f6e502a5, type: 2}
+  - {fileID: 11400000, guid: ad5411a3eb104e341b7c82ef63aab992, type: 2}
+  - {fileID: 11400000, guid: b958dce5bf6a8954497a3d53dfd5b105, type: 2}
+  - {fileID: 11400000, guid: 76c7d0a49520165468f5ad13b27d6963, type: 2}
+  - {fileID: 11400000, guid: 3c763261e2790754dbfb22b1c97215ee, type: 2}
+  - {fileID: 11400000, guid: e4ecddaa1ace114418242205d1d6db8a, type: 2}
+  - {fileID: 11400000, guid: 7e8ff4c33d9f2cf43b6ac2806261ffaf, type: 2}
+  - {fileID: 11400000, guid: d4a07cad2808daf4d8b723c357d1c145, type: 2}
+  - {fileID: 11400000, guid: 23933fe755b1d5c4693aba73b7c7a387, type: 2}
+  - {fileID: 11400000, guid: e9c519d2b5510f84c80e241c9e930ee8, type: 2}
+  electricalCards:
+  - {fileID: 11400000, guid: 899c9f6f824dc3c4794e3fbb73cb93b0, type: 2}
+  - {fileID: 11400000, guid: 05e805f3142497545bbc34a53c076f7a, type: 2}
+  - {fileID: 11400000, guid: 43a4d1555c8a3754ea3c8eade86ea5d0, type: 2}
+  - {fileID: 11400000, guid: ca1f767b08fd82e4b93cbf993c46ea40, type: 2}
+  - {fileID: 11400000, guid: 176db853ea0ad3f4e9b97b09585b9e30, type: 2}
+  - {fileID: 11400000, guid: 4fc32546fc4e4d94d8b35260b2e39303, type: 2}
+  - {fileID: 11400000, guid: 56e6288a6a4ed484eafe22477a5d8aa5, type: 2}
+  - {fileID: 11400000, guid: a1e004d47e729ea4d8af4e64782acf7f, type: 2}
+  - {fileID: 11400000, guid: 660aafed0928b674f89ba673206ae050, type: 2}
+  plumbingCards:
+  - {fileID: 11400000, guid: e5a4e9d264fbd684d99e4a0eb4e5148d, type: 2}
+  - {fileID: 11400000, guid: 545c79643bac6c04eb87885a6fa2d1e7, type: 2}
+  - {fileID: 11400000, guid: c2085123d5a1b1b4dbc64c944fa74c29, type: 2}
+  - {fileID: 11400000, guid: 42af4321965b2da40a34729db4d21a03, type: 2}
+  - {fileID: 11400000, guid: 74c0daaddf18ac441860dfe938b89289, type: 2}
+  - {fileID: 11400000, guid: 5153bbca10f719841941a824f01f8183, type: 2}
+  - {fileID: 11400000, guid: aeafe58ff6ec39647bbb594c88ab332c, type: 2}
+  - {fileID: 11400000, guid: 86ca5c7bff39d8b4b85fb21b43c4d1c8, type: 2}
+  - {fileID: 11400000, guid: 4720276a3e9116d4ca34c7a00fc20b2f, type: 2}
+  - {fileID: 11400000, guid: 435fd35e57ef87842b4a3b2abaf919ea, type: 2}
+  - {fileID: 11400000, guid: e95ba553dd972cb4aa1718fbce986775, type: 2}
+  - {fileID: 11400000, guid: fc535a63d9c308f4896e81ef936e14f9, type: 2}
+  - {fileID: 11400000, guid: 27cf0a0f6630ac540b09e7471d76d592, type: 2}
+  - {fileID: 11400000, guid: 95f20ef235f17b64cbf8b26863d2716f, type: 2}
+  - {fileID: 11400000, guid: c1b9acb29791315459b77588109a127e, type: 2}
+  - {fileID: 11400000, guid: 0658dc30550448742ab6f881fee370c7, type: 2}
+  - {fileID: 11400000, guid: e38932577d9039d4bb4a9b12959fb7f8, type: 2}
+  - {fileID: 11400000, guid: edfcc2b3cb3717846ba2fd86c6dc362e, type: 2}
+  - {fileID: 11400000, guid: d4424ef5c792d5a4783cf6ae967e3ab5, type: 2}
+  - {fileID: 11400000, guid: fc59a6f56c37d9948b2e66be34a55f0f, type: 2}
+  specialCards:
+  - {fileID: 11400000, guid: b139aa5984c7f7b46b0825d6c96b8856, type: 2}
+  - {fileID: 11400000, guid: a02e026e3cd801340ac55ab159efe964, type: 2}
+  - {fileID: 11400000, guid: 9cc9fbfd493d68f448ab6bf3694fea99, type: 2}

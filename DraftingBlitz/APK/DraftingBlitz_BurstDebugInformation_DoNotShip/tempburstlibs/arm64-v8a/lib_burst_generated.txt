@@ -44,7 +44,6 @@ Library: F:\UnityProjects\DraftingBlitzRepository\DraftingBlitz\Temp\BurstOutput
 --assembly-defines=UnityEngine;
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=F:\UnityProjects\DraftingBlitzRepository\DraftingBlitz\Temp\Burst
---debug=Full
 --key-folder=F:/UnityEditor/2022.3.25f1/Editor/Data/PlaybackEngines/AndroidPlayer
 --decode-folder=F:\UnityProjects\DraftingBlitzRepository\DraftingBlitz\Library\Burst
 --output=F:\UnityProjects\DraftingBlitzRepository\DraftingBlitz\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
@@ -95,7 +94,6 @@ Library: F:\UnityProjects\DraftingBlitzRepository\DraftingBlitz\Temp\BurstOutput
 --assembly-defines=UnityEngine;
 --generate-link-xml=Temp\burst.link.xml
 --temp-folder=F:\UnityProjects\DraftingBlitzRepository\DraftingBlitz\Temp\Burst
---debug=Full
 --key-folder=F:/UnityEditor/2022.3.25f1/Editor/Data/PlaybackEngines/AndroidPlayer
 --decode-folder=F:\UnityProjects\DraftingBlitzRepository\DraftingBlitz\Library\Burst
 --output=F:\UnityProjects\DraftingBlitzRepository\DraftingBlitz\Temp\BurstOutput\tempburstlibs\arm64-v8a\lib_burst_generated
