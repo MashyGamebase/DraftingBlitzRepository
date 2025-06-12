@@ -136,6 +136,8 @@ public class CardHand : MonoBehaviour
     {
         if (handType != HandType.Bottom) return; // Only pop from bottom hand
 
+        TurnSystem.Instance.FlipCard(); // Plays a flipcard sfx
+
         if (cardLogics[index].isRaised)
         {
             TurnSystem.Instance.PlayCard(index, cardLogics[index].card.CardName, cardLogics[index].card.CardType);

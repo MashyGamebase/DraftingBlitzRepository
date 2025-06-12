@@ -28,6 +28,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d4a07cad2808daf4d8b723c357d1c145, type: 2}
   - {fileID: 11400000, guid: 23933fe755b1d5c4693aba73b7c7a387, type: 2}
   - {fileID: 11400000, guid: e9c519d2b5510f84c80e241c9e930ee8, type: 2}
+  - {fileID: 11400000, guid: 14a82ba9ac55e8f4daa919110607ca05, type: 2}
   electricalCards:
   - {fileID: 11400000, guid: 899c9f6f824dc3c4794e3fbb73cb93b0, type: 2}
   - {fileID: 11400000, guid: 05e805f3142497545bbc34a53c076f7a, type: 2}

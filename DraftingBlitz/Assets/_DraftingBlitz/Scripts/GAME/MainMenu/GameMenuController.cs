@@ -1,14 +1,27 @@
+using Photon.Pun;
+using Photon.Realtime;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class GameMenuController : MonoBehaviour
+public class GameMenuController : MonoBehaviourPunCallbacks
 {
     public Image profileAvatar;
     public List<Sprite> profileAvatars;
     public Button MenuButton;
 
+    public GameObject SettingsTab;
+
+    [SerializeField]
+    bool isSettingsOpen = false;
+
+    public Button VSMatchButton;
+    public TMP_InputField roomID;
+
+
+    public PhotonCreateJoinRoom roomMaker;
 
     private void Start()
     {
@@ -18,12 +31,45 @@ public class GameMenuController : MonoBehaviour
 
     void AssignButtons()
     {
-        MenuButton.onClick.AddListener(LogoutUserAndLoadMainMenu);
+        MenuButton.onClick.AddListener(ToggleMainMenu);
+        VSMatchButton.onClick.AddListener(CreateRoom);
     }
 
-    void LogoutUserAndLoadMainMenu()
+    public void ToggleMainMenu()
     {
-        FirebaseManager.Instance?.LogoutUser();
+        if (isSettingsOpen)
+        {
+            isSettingsOpen = false;
+            SettingsTab.SetActive(false);
+        }
+        else if (!isSettingsOpen)
+        {
+            isSettingsOpen = true;
+            SettingsTab.SetActive(true);
+        }
+    }
+
+    public void CreateRoom()
+    {
+        roomMaker.TryJoinOrCreateRoom(roomID.text);
+    }
+
+    public void LogoutUserAndLoadMainMenu()
+    {
+        if(FirebaseManager.Instance != null)
+        {
+            if (FirebaseManager.Instance.user.IsValid())
+                FirebaseManager.Instance?.LogoutUser();
+        }
+
+        PhotonNetwork.Disconnect();
+    }
+
+    public override void OnDisconnected(DisconnectCause cause)
+    {
+        base.OnDisconnected(cause);
+
+        FadeController.Instance.StartFakeLoading("MainMenu", true);
     }
 
     private void SetAvatar()

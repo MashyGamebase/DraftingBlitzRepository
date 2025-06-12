@@ -35,6 +35,9 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
     public TMP_Text player1Score, player1Name;
     public TMP_Text player2Score, player2Name;
 
+    public Image loopIndicator;
+    public Sprite normal, reversed;
+
     public Category currentCategory;
 
     [Header("References")]
@@ -55,6 +58,17 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
     public GameObject startPanel;
     public Sprite[] startSprites;
     public Image startImage;
+
+    [Header("Turn Cooldown")]
+    public Image cooldownRadialImage; // Radial 360 fill image
+    public float turnCooldown = 8f;
+    private float currentCooldown = 0f;
+    private bool isCooldownActive = false;
+
+    [Header("Audio")]
+    public AudioSource sfxSource;
+
+    public AudioClip dealCardsClip, flipCardClip, pointsObtainedClip, loseATurnClip;
 
     // Timer
     public float categoryTimer = 15f;
@@ -110,6 +124,11 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
         {
             StartCoroutine(WaitForAllPlayersReady());
         }
+    }
+
+    public void FlipCard()
+    {
+        sfxSource.PlayOneShot(flipCardClip);
     }
 
     void SetPlayerReady()
@@ -224,6 +243,10 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
             GameStarted = true;
 
         startPanel.SetActive(false);
+
+        if (!sfxSource.isPlaying)
+            sfxSource.PlayOneShot(dealCardsClip);
+
         cardManager.GenerateHand(playerIndex, (CardHand.HandType)handType, ownHand);
     }
 
@@ -231,6 +254,8 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
     {
         isYourTurn = (localPlayerId == currentTurn);
         yourTurnImage.SetActive(isYourTurn);
+
+        loopIndicator.sprite = isReversed ? reversed : normal;
 
 #if UNITY_EDITOR
         RefreshDebugScores();
@@ -244,11 +269,42 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
             {
                 SwitchCategory();
             }
+
+            // Handle player turn cooldown
+            if (isYourTurn)
+            {
+                if (!isCooldownActive)
+                {
+                    currentCooldown = turnCooldown;
+                    cooldownRadialImage.fillAmount = 1f;
+                    isCooldownActive = true;
+                }
+
+                currentCooldown -= Time.deltaTime;
+                float t = 1f - Mathf.Clamp01(currentCooldown / turnCooldown);
+
+                cooldownRadialImage.fillAmount = 1f - t;
+                cooldownRadialImage.color = Color.Lerp(Color.green, Color.red, t);
+
+                if (currentCooldown <= 0f)
+                {
+                    SkipTurn(); // Automatically skip turn when cooldown ends
+                    ResetCooldown();
+                }
+            }
         }
 
         timerText.text = $"CATEGORY CHANGES IN...{Mathf.CeilToInt(categoryTimer)}s";
 
         UpdateScoreUI(); // === Added: Update score display ordered by score
+    }
+
+    void ResetCooldown()
+    {
+        isCooldownActive = false;
+        currentCooldown = 0f;
+        cooldownRadialImage.fillAmount = 1f;
+        cooldownRadialImage.color = Color.green;
     }
 
     // === Added: Method to update the UI scores and names, ordered by score descending
@@ -308,8 +364,16 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
         if (!isYourTurn) return;
 
         currentTurn = (currentTurn + (isReversed ? -1 : 1) + PhotonNetwork.CurrentRoom.PlayerCount) % PhotonNetwork.CurrentRoom.PlayerCount;
+        ResetCooldown();
         photonView.RPC("RPC_UpdateTurn", RpcTarget.AllBuffered, currentTurn);
         photonView.RPC("RPC_RemoveCard", RpcTarget.AllBuffered, localPlayerId, cardIndex, cardName, category);
+    }
+
+    public void SkipTurn()
+    {
+        currentTurn = (currentTurn + (isReversed ? -1 : 1) + PhotonNetwork.CurrentRoom.PlayerCount) % PhotonNetwork.CurrentRoom.PlayerCount;
+        photonView.RPC("RPC_UpdateTurn", RpcTarget.AllBuffered, currentTurn);
+        ResetCooldown();
     }
 
     public void DrawCard()
@@ -329,6 +393,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
         photonView.RPC("RPC_AnimateDrawCard", RpcTarget.AllBuffered, localPlayerId);
         photonView.RPC("RPC_UpdateTurn", RpcTarget.AllBuffered, currentTurn);
 
+        ResetCooldown();
         // No category switch here anymore
     }
 
@@ -434,10 +499,13 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
         if (blockedPlayer == newTurn)
         {
             blockedPlayer = -1; // reset
-            newTurn = (newTurn + (isReversed ? -1 : 1) + MaxPlayers) % MaxPlayers;
+            newTurn = (newTurn + (isReversed ? -1 : 1) + PhotonNetwork.CurrentRoom.PlayerCount) % PhotonNetwork.CurrentRoom.PlayerCount;
         }
 
         currentTurn = newTurn;
+
+        if (PhotonNetwork.IsMasterClient)
+            SwitchCategory();
     }
 
     [PunRPC]
@@ -453,17 +521,17 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
                 cardHand.RemoveCard(cardIndex, card.CardVisual);
                 FloorplanMapper.Instance.ApplyPiece(cardName, category);
 
+                sfxSource.PlayOneShot(pointsObtainedClip);
+
                 FloorplanMapper.Instance.lastAppliedPoints = card.Points;
             }
         }
-
-        SwitchCategory();
     }
 
     [PunRPC]
     void RPC_BlockNextPlayer(int playerId)
     {
-        blockedPlayer = (currentTurn + (isReversed ? -1 : 1) + MaxPlayers) % MaxPlayers;
+        blockedPlayer = (currentTurn + (isReversed ? -1 : 1) + PhotonNetwork.CurrentRoom.PlayerCount) % PhotonNetwork.CurrentRoom.PlayerCount;
         Debug.Log($"Player {blockedPlayer} is blocked next round!");
     }
 
@@ -512,6 +580,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
             stream.SendNext(currentTurn);
             stream.SendNext((int)currentCategory);
             stream.SendNext(categoryTimer);
+            stream.SendNext(isReversed);
 
             stream.SendNext(playerScores.Count);
             foreach (var pair in playerScores)
@@ -526,6 +595,7 @@ public class TurnSystem : MonoBehaviourPunCallbacks, IPunObservable
             currentTurn = (int)stream.ReceiveNext();
             currentCategory = (Category)stream.ReceiveNext();
             categoryTimer = (float)stream.ReceiveNext();
+            isReversed = (bool)stream.ReceiveNext();
 
             int count = (int)stream.ReceiveNext();
             playerScores.Clear();

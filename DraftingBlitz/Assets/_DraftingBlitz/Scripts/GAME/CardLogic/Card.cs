@@ -9,4 +9,6 @@ public class Card : ScriptableObject
     public Sprite CardVisual;
     public CardType CardType;
     public float Points;
+
+    public bool dealt = false;
 }

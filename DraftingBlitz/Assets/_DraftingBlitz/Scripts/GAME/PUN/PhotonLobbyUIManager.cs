@@ -9,7 +9,7 @@ public class PhotonLobbyUIManager : MonoBehaviourPunCallbacks
 {
     public Dictionary<string, GameObject> playerIcons = new Dictionary<string, GameObject>();
 
-    public GameObject MainCanvas, VSCanvas, ClassicCanvas;
+    public GameObject MainCanvas, VSCanvas, ClassicCanvas, MatchIDCanvas;
 
     public GameObject playerIconPrefab;
     public Transform iconParent;
@@ -33,6 +33,9 @@ public class PhotonLobbyUIManager : MonoBehaviourPunCallbacks
 
     public void InitializePlayerIcon()
     {
+        MatchIDCanvas.SetActive(false);
+        VSCanvas.SetActive(true);
+
         if (PhotonNetwork.IsMasterClient)
             startGameButton.interactable = true;
 
@@ -72,7 +75,7 @@ public class PhotonLobbyUIManager : MonoBehaviourPunCallbacks
         playerIcons[playerName] = iconObj;
     }
 
-    void LeaveRoom()
+    public void LeaveRoom()
     {
         PhotonNetwork.LeaveRoom();
 

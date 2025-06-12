@@ -39,27 +39,29 @@ public class CardDatabase : ScriptableObject
         // Collect all cards from all categories
         foreach (var cardList in allCardLists)
         {
-            allCards.AddRange(cardList);
+            allCards.AddRange(cardList.FindAll(card => card != null && !card.dealt));
         }
 
-        if (allCards.Count == 0) return deck; // Return empty if no cards exist
+        if (allCards.Count == 0) return deck; // Return empty if no undealt cards exist
 
         if (allowDuplicates)
         {
-            // Allow duplicates in deck
             for (int i = 0; i < deckSize; i++)
             {
-                deck.Add(allCards[Random.Range(0, allCards.Count)]);
+                Card card = allCards[Random.Range(0, allCards.Count)];
+                deck.Add(card);
+                card.dealt = true;
             }
         }
         else
         {
-            // Prevent duplicates by shuffling and selecting
             List<Card> tempList = new List<Card>(allCards);
             for (int i = 0; i < Mathf.Min(deckSize, tempList.Count); i++)
             {
                 int randomIndex = Random.Range(0, tempList.Count);
-                deck.Add(tempList[randomIndex]);
+                Card selectedCard = tempList[randomIndex];
+                deck.Add(selectedCard);
+                selectedCard.dealt = true;
                 tempList.RemoveAt(randomIndex);
             }
         }
@@ -102,20 +104,28 @@ public class CardDatabase : ScriptableObject
         List<Card> result = new List<Card>();
         if (cardList == null || cardList.Count == 0) return result;
 
+        List<Card> undealtCards = cardList.FindAll(card => card != null && !card.dealt);
+
+        if (undealtCards.Count == 0) return result;
+
         if (allowDuplicates)
         {
             for (int i = 0; i < count; i++)
             {
-                result.Add(cardList[Random.Range(0, cardList.Count)]);
+                Card card = undealtCards[Random.Range(0, undealtCards.Count)];
+                result.Add(card);
+                card.dealt = true;
             }
         }
         else
         {
-            List<Card> tempList = new List<Card>(cardList);
+            List<Card> tempList = new List<Card>(undealtCards);
             for (int i = 0; i < Mathf.Min(count, tempList.Count); i++)
             {
                 int randomIndex = Random.Range(0, tempList.Count);
-                result.Add(tempList[randomIndex]);
+                Card selectedCard = tempList[randomIndex];
+                result.Add(selectedCard);
+                selectedCard.dealt = true;
                 tempList.RemoveAt(randomIndex);
             }
         }
@@ -129,13 +139,13 @@ public class CardDatabase : ScriptableObject
     public Card GetCardByName(string cardName)
     {
         List<List<Card>> allCardLists = new List<List<Card>>
-    {
-        actionCards,
-        architecturalCards,
-        electricalCards,
-        plumbingCards,
-        specialCards
-    };
+        {
+            actionCards,
+            architecturalCards,
+            electricalCards,
+            plumbingCards,
+            specialCards
+        };
 
         foreach (var cardList in allCardLists)
         {
@@ -148,5 +158,29 @@ public class CardDatabase : ScriptableObject
 
         Debug.LogWarning($"Card with name '{cardName}' not found in the database.");
         return null;
+    }
+
+    /// <summary>
+    /// Resets the status of cards in the database
+    /// </summary>
+    public void ResetCardDatabase()
+    {
+        List<List<Card>> allCardLists = new List<List<Card>>
+        {
+            actionCards,
+            architecturalCards,
+            electricalCards,
+            plumbingCards,
+            specialCards
+        };
+
+        foreach (var cardList in allCardLists)
+        {
+            foreach (var card in cardList)
+            {
+                if (card != null)
+                    card.dealt = false;
+            }
+        }
     }
 }
